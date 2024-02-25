@@ -124,7 +124,7 @@ class CourseListAdapter(
     }
 
     override fun getItemCount(): Int {
-        return items.size
+        return items.size //ripple_effect
     }
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
