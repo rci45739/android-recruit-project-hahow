@@ -49,8 +49,8 @@ abstract class BaseActivity<B : ViewDataBinding, VM : ViewModel>(protected var v
         setFullScreen()
         initBindingViewModel()
         bindLayoutWithViewModel()
+        initView(savedInstanceState)
         initData()
-        initView()
         setObserver()
     }
 
@@ -143,7 +143,7 @@ abstract class BaseActivity<B : ViewDataBinding, VM : ViewModel>(protected var v
     /**
      * Initial View
      */
-    protected abstract fun initView()
+    protected abstract fun initView(savedInstanceState: Bundle?)
 
     /**
      * Initial Data

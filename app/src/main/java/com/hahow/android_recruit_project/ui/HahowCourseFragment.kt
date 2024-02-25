@@ -12,8 +12,7 @@ import `in`.hahow.android_recruit_project.R
 import `in`.hahow.android_recruit_project.databinding.FragmentHahowCourseBinding
 
 class HahowCourseFragment: BaseFragment<FragmentHahowCourseBinding, HahowCourseViewModel>(
-    HahowCourseViewModel(application = Application())
-) {
+    HahowCourseViewModel(application = Application())) {
     private lateinit var courseListAdapter: CourseListAdapter
     override fun layoutId(): Int {
         return R.layout.fragment_hahow_course
@@ -29,12 +28,11 @@ class HahowCourseFragment: BaseFragment<FragmentHahowCourseBinding, HahowCourseV
     override fun setAppbar() {
     }
 
-    override fun initData() {
-    }
-
     override fun initView(savedInstanceState: Bundle?) {
         setCourseListInit()
-        viewModel.fetchTestOne()
+    }
+    override fun initData() {
+        viewModel.fetchCourseData()
         setCourseListData()
     }
 

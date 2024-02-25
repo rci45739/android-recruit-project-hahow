@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="in.hahow.android_recruit_project">
+    <uses-permission android:name="android.permission.INTERNET" />
+
 
     <application
         android:allowBackup="true"
@@ -12,7 +14,7 @@
     <activity
         android:name="com.hahow.android_recruit_project.ui.HahowMainActivity"
         android:exported="true"
-        android:screenOrientation="portrait"
+        android:screenOrientation="fullSensor"
         android:windowSoftInputMode="stateHidden|adjustPan">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />

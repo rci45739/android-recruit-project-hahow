@@ -27,9 +27,11 @@ class HahowMainActivity: BaseActivity<ActivityHahowMainBinding, HahowMainViewMod
         dataBinding.viewModel = viewModel
     }
 
-    override fun initView() {
-        hahowCourseFragment = HahowCourseFragment.newInstance()
-        FragmentUtil.addFragment(this, R.id.container, hahowCourseFragment, "MePage", null)
+    override fun initView(savedInstanceState: Bundle?) {
+        if(savedInstanceState == null){
+            hahowCourseFragment = HahowCourseFragment.newInstance()
+            FragmentUtil.addFragment(this, R.id.container, hahowCourseFragment, "MePage", null)
+        }
     }
 
     override fun initData() {
