@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="itemData"
+            type="com.hahow.android_recruit_project.datamodel.CourseData" />
+
+        <variable
+            name="viewModel"
+            type="com.hahow.android_recruit_project.viewmodel.HahowCourseViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clCourseImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvCourseRadiusImage"
+                android:layout_width="130dp"
+                android:layout_height="90dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="0dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/img_course"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:minHeight="80dp"
+                    android:elevation="0dp"
+                    android:scaleType="centerCrop"
+                    tools:src="@mipmap/ic_launcher" />
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/tvStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:paddingHorizontal="6dp"
+                android:paddingVertical="3dp"
+                android:elevation="4dp"
+                android:background="@drawable/bg_status_incubating"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="@id/cvCourseRadiusImage"
+                app:layout_constraintEnd_toEndOf="@id/cvCourseRadiusImage"
+                tools:text="已開課" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clCourseDescription"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="@id/cvCourseRadiusImage"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/cvCourseRadiusImage"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginStart="5dp">
+
+                <TextView
+                    android:id="@+id/tvCourseTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:text="@{itemData.title}"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="RyuuuTV看動漫看日劇，零到N4道地說日文" />
+
+                <TextView
+                    android:id="@+id/tvNumSoldStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:gravity="bottom"
+                    android:textSize="11sp"
+                    app:layout_constraintBottom_toTopOf="@id/progressBarNumSoldStatus"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvCourseTitle"
+                    tools:text="0%" />
+
+                <ProgressBar
+                    android:id="@+id/progressBarNumSoldStatus"
+                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:progressBackgroundTint="@color/black"
+                    android:progressTint="@color/color_orange"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvCountdownDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/textview_countdown_time"
+                    android:textColor="@color/color_gray"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:text="倒數13天"
+                    android:textSize="11sp"
+                    android:gravity="center"
+                    app:drawableStartCompat="@drawable/drawble_clock" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@color/color_light_gray" />
+
+    </LinearLayout>
+</layout>

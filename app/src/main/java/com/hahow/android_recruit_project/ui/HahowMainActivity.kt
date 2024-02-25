@@ -3,6 +3,7 @@ package com.hahow.android_recruit_project.ui
 import android.app.Application
 import android.os.Bundle
 import com.hahow.android_recruit_project.BaseActivity
+import com.hahow.android_recruit_project.utils.FragmentUtil
 import com.hahow.android_recruit_project.viewmodel.HahowMainViewModel
 import `in`.hahow.android_recruit_project.R
 import `in`.hahow.android_recruit_project.databinding.ActivityHahowMainBinding
@@ -14,6 +15,7 @@ class HahowMainActivity: BaseActivity<ActivityHahowMainBinding, HahowMainViewMod
         = Application()
     )
 ) {
+    private lateinit var hahowCourseFragment: HahowCourseFragment
     override fun layoutId(): Int {
         return R.layout.activity_hahow_main
     }
@@ -26,7 +28,8 @@ class HahowMainActivity: BaseActivity<ActivityHahowMainBinding, HahowMainViewMod
     }
 
     override fun initView() {
-
+        hahowCourseFragment = HahowCourseFragment.newInstance()
+        FragmentUtil.addFragment(this, R.id.container, hahowCourseFragment, "MePage", null)
     }
 
     override fun initData() {
@@ -42,7 +45,7 @@ class HahowMainActivity: BaseActivity<ActivityHahowMainBinding, HahowMainViewMod
     }
 
     override fun isFullScreenMode(): Boolean {
-        return true
+        return false
     }
 
     override fun setObserver() {

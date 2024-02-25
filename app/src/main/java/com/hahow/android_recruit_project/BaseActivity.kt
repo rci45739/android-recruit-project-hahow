@@ -4,6 +4,8 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
@@ -173,19 +175,19 @@ abstract class BaseActivity<B : ViewDataBinding, VM : ViewModel>(protected var v
     /**
      * 按返回鍵兩次
      */
-//    private var doubleBackToExitPressedOnce = false
-//    override fun onBackPressed() {
-//        if (doubleBackToExitPressedOnce) {
-//            super.onBackPressed()
-//            return
-//        }
-//
-//        this.doubleBackToExitPressedOnce = true
+    private var doubleBackToExitPressedOnce = false
+    override fun onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed()
+            return
+        }
+
+        this.doubleBackToExitPressedOnce = true
 //        toast("Please click BACK again to exit")
-//
-//
-//        Handler(Looper.getMainLooper()).postDelayed(Runnable {
-//            doubleBackToExitPressedOnce = false
-//        }, 2000)
-//    }
+
+
+        Handler(Looper.getMainLooper()).postDelayed(Runnable {
+            doubleBackToExitPressedOnce = false
+        }, 2000)
+    }
 }

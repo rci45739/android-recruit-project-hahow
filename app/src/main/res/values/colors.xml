@@ -9,4 +9,9 @@
     <color name="white">#FFFFFFFF</color>
     <!--App視覺-->
     <color name="main_style">#000000</color>
+    <!--課程item視覺-->
+    <color name="color_gray">#979797</color>
+    <color name="color_orange">#FF9900</color>
+    <color name="color_light_gray">#EAEAEA</color>
+    <color name="color_green">#00CC99</color>
 </resources>
