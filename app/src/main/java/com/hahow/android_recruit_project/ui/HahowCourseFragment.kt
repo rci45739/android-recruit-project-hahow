@@ -66,15 +66,6 @@ class HahowCourseFragment: BaseFragment<FragmentHahowCourseBinding, HahowCourseV
                 courseListAdapter.submitList(it)
             }
         }
-
-        viewModel.run {
-            viewModel.courseList.observe(this@HahowCourseFragment, Observer {
-                if(it.isNotEmpty()){
-                    Log.d("list", it.toString())
-                    courseListAdapter
-                }
-            })
-        }
     }
 
     companion object {
