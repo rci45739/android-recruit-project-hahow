@@ -11,10 +11,11 @@ import com.hahow.android_recruit_project.viewmodel.HahowCourseViewModel
 import `in`.hahow.android_recruit_project.R
 import `in`.hahow.android_recruit_project.databinding.FragmentHahowCourseBinding
 
-class HahowCourseFragment: BaseFragment<FragmentHahowCourseBinding, HahowCourseViewModel>(
-    HahowCourseViewModel(application = Application())) {
+class HahowCourseFragment : BaseFragment<FragmentHahowCourseBinding, HahowCourseViewModel>(
+    HahowCourseViewModel(application = Application())
+) {
     private lateinit var courseListAdapter: CourseListAdapter
-    private lateinit var courseAppDatabase:CourseDatabase
+    private lateinit var courseAppDatabase: CourseDatabase
     private lateinit var courseDao: CourseDao
 
     override fun layoutId(): Int {
@@ -25,7 +26,7 @@ class HahowCourseFragment: BaseFragment<FragmentHahowCourseBinding, HahowCourseV
     }
 
     override fun bindLayoutWithViewModel() {
-       dataBinding.viewModel = viewModel
+        dataBinding.viewModel = viewModel
     }
 
     override fun setAppbar() {
@@ -33,19 +34,35 @@ class HahowCourseFragment: BaseFragment<FragmentHahowCourseBinding, HahowCourseV
 
     override fun initView(savedInstanceState: Bundle?) {
         setCourseListInit()
+        setSwipeRefreshListener()
     }
+
     override fun initData() {
         courseAppDatabase = CourseDatabase.getInstance(requireContext())
         courseDao = courseAppDatabase.courseDao()
-        viewModel.fetchCourseData(courseDao)
+        viewModel.fetchCourseData(courseDao, false)
     }
 
     override fun setObserver() {
         viewModel.run {
-            viewModel.courseList.observe(this@HahowCourseFragment ){
+            viewModel.courseList.observe(this@HahowCourseFragment) {
                 courseListAdapter.setData(it.toMutableList())
                 courseListAdapter.submitList(it)
+                courseListAdapter.notifyDataSetChanged()
             }
+
+            viewModel.swipeStatus.observe(this@HahowCourseFragment) {
+                if(it == false){
+                    dataBinding.layoutSwipeRefresh.isRefreshing = false
+                }
+            }
+        }
+    }
+
+    private fun setSwipeRefreshListener() {
+        dataBinding.layoutSwipeRefresh.setOnRefreshListener {
+            viewModel.courseList.value = emptyList()
+            viewModel.fetchCourseData(courseDao , true)
         }
     }
 
@@ -60,15 +77,6 @@ class HahowCourseFragment: BaseFragment<FragmentHahowCourseBinding, HahowCourseV
                 ).also { it1 ->
                     courseListAdapter = it1
                 }
-        }
-    }
-
-    private fun setCourseListData() {
-        viewModel.run {
-            viewModel.courseList.observe(this@HahowCourseFragment ){
-                courseListAdapter.setData(it.toMutableList())
-                courseListAdapter.submitList(it)
-            }
         }
     }
 

@@ -7,10 +7,10 @@ import com.google.gson.reflect.TypeToken
 import com.hahow.android_recruit_project.datamodel.CourseData
 import com.hahow.android_recruit_project.datamodel.CourseList
 import com.hahow.android_recruit_project.room.CourseDao
+import com.hahow.android_recruit_project.listener.ApiStatusListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class HahowCourseRepository(private val application: Application, private val coroutineScope
@@ -20,32 +20,32 @@ class HahowCourseRepository(private val application: Application, private val co
     private var cacheList:List<CourseData> = listOf()
     private val gson: Gson = Gson()
 
-    fun fetchCourseData(courseDao: CourseDao) {
-        coroutineScope.launch(Dispatchers.IO) {
+    suspend fun fetchCourseData(courseDao: CourseDao , apiStatusListener: ApiStatusListener) {
             val jsonString = loadCourseData()
-            val courseDataList = parseCourseData(jsonString)
+            val courseDataList = parseCourseData(jsonString , apiStatusListener)
+            cacheList = emptyList()
             courseList.postValue(courseDataList)
             courseDao.insertAll(courseDataList)
             cacheList = courseDao.getAllCourses()
-        }
+
     }
 
     private fun loadCourseData(): String {
         return application.assets.open("data.json").bufferedReader().use { it.readText() }
     }
 
-    private suspend fun parseCourseData(jsonString: String ): List<CourseData> {
+    private suspend fun parseCourseData(jsonString: String, apiStatusListener: ApiStatusListener): List<CourseData> {
         return withContext(Dispatchers.Default) {
             try {
-                isLoading.postValue(true)
+                apiStatusListener.onSuccess()
                 val courseType = object : TypeToken<CourseList>() {}.type
                 gson.fromJson<CourseList>(jsonString, courseType).data
             } catch (e: Exception) {
-                isLoading.postValue(false)
+                apiStatusListener.onFailure()
                 emptyList()
             } finally {
                 delay(2000)
-                isLoading.postValue(false)
+                apiStatusListener.onComplete()
             }
         }
     }

@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 
-data class CourseList(val data: List<CourseData>)
+data class CourseList(val data: MutableList<CourseData>)
 @Entity(tableName = "course")
 data class CourseData(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
