@@ -2,11 +2,11 @@ package com.hahow.android_recruit_project.ui
 
 import android.app.Application
 import android.os.Bundle
-import android.util.Log
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hahow.android_recruit_project.BaseFragment
 import com.hahow.android_recruit_project.adapter.CourseListAdapter
+import com.hahow.android_recruit_project.room.CourseDao
+import com.hahow.android_recruit_project.room.CourseDatabase
 import com.hahow.android_recruit_project.viewmodel.HahowCourseViewModel
 import `in`.hahow.android_recruit_project.R
 import `in`.hahow.android_recruit_project.databinding.FragmentHahowCourseBinding
@@ -14,6 +14,9 @@ import `in`.hahow.android_recruit_project.databinding.FragmentHahowCourseBinding
 class HahowCourseFragment: BaseFragment<FragmentHahowCourseBinding, HahowCourseViewModel>(
     HahowCourseViewModel(application = Application())) {
     private lateinit var courseListAdapter: CourseListAdapter
+    private lateinit var courseAppDatabase:CourseDatabase
+    private lateinit var courseDao: CourseDao
+
     override fun layoutId(): Int {
         return R.layout.fragment_hahow_course
     }
@@ -32,11 +35,18 @@ class HahowCourseFragment: BaseFragment<FragmentHahowCourseBinding, HahowCourseV
         setCourseListInit()
     }
     override fun initData() {
-        viewModel.fetchCourseData()
-        setCourseListData()
+        courseAppDatabase = CourseDatabase.getInstance(requireContext())
+        courseDao = courseAppDatabase.courseDao()
+        viewModel.fetchCourseData(courseDao)
     }
 
     override fun setObserver() {
+        viewModel.run {
+            viewModel.courseList.observe(this@HahowCourseFragment ){
+                courseListAdapter.setData(it.toMutableList())
+                courseListAdapter.submitList(it)
+            }
+        }
     }
 
     private fun setCourseListInit() {
@@ -50,12 +60,6 @@ class HahowCourseFragment: BaseFragment<FragmentHahowCourseBinding, HahowCourseV
                 ).also { it1 ->
                     courseListAdapter = it1
                 }
-               /*     .apply {
-                    onLoadmore = {
-                        loadNextPage()
-                    }
-                }*/
-
         }
     }
 

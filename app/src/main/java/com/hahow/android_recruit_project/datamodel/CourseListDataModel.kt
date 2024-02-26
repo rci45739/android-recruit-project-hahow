@@ -1,8 +1,13 @@
 package com.hahow.android_recruit_project.datamodel
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
 
 data class CourseList(val data: List<CourseData>)
+@Entity(tableName = "course")
 data class CourseData(
+    @PrimaryKey(autoGenerate = true) val id: Long = 0,
     val successCriteria: SuccessCriteria,
     val numSoldTickets: Int,
     val status: String,

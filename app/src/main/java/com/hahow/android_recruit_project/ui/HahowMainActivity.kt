@@ -52,4 +52,9 @@ class HahowMainActivity: BaseActivity<ActivityHahowMainBinding, HahowMainViewMod
 
     override fun setObserver() {
     }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
+    }
 }
