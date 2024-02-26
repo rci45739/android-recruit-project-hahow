@@ -61,7 +61,6 @@ class HahowCourseFragment : BaseFragment<FragmentHahowCourseBinding, HahowCourse
 
     private fun setSwipeRefreshListener() {
         dataBinding.layoutSwipeRefresh.setOnRefreshListener {
-            viewModel.courseList.value = emptyList()
             viewModel.fetchCourseData(courseDao , true)
         }
     }
