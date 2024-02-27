@@ -25,11 +25,21 @@
 - **SwipeRefreshLayout**: `用來做下拉刷新的layout`
 - **DataBinding**: `綁定View與數據模型`
 
+## Library or Third party Library
+- **Glide**: `用於加載、緩存和顯示圖片`
+- **Room**: `是一個在 SQLite database上提供抽像層的持久性庫，我將它用來當Data Cache`
+- **Gson**: `用來將JSON字符串反序列化`
+- **Coroutines**: `協程用來做一些耗時操作`
+- **SwipeRefreshLayout**: `用來做下拉刷新的layout`
+- **DataBinding**: `綁定View與數據模型`
+- **Recyclerview + DiffUtil**:
+  `RecyclerView用於顯示數據列表，DiffUtil用于計算list之間的差異並更新提高性能`
+
 ## process
-> - init data時呼叫ViewModel內fetch method
-> - 如果cache有資料且並非下拉刷新，直接將local database的資料取出顯示
-> - 如果cache沒有資料且並非下拉刷新就先讀取提供的Data.json，並同時將解析玩的資料存進local database當cache
-> - 下拉刷新時直接清存cache資料，並重新走讀取提供的Data.json這個flow並將其set進local database
+- init data時呼叫ViewModel內fetch method
+- 如果cache有資料且並非下拉刷新，直接將local database的資料取出顯示
+- 如果cache沒有資料且並非下拉刷新就先讀取提供的Data.json，並同時將解析玩的資料存進local database當cache
+- 下拉刷新時直接清存cache資料，並重新走讀取提供的Data.json這個flow並將其set進local database
 
 **深色模式也有考慮進去，點擊列表Item時有Ripple anim**
 
@@ -40,5 +50,7 @@
 - 將這三項抽離出來可以供其他地方使用
 
 #### UI 設計
+<img width="300" alt="CleanShot 2021-12-09 at 10 59 30@2x" src="https://user-images.githubusercontent.com/76472179/145350022-b4624fe0-2612-4fdb-950c-da6898ca4166.png">
+[image]([picture or gif url](https://drive.google.com/file/d/1kJtRwsei6TmmqmrVT6PQL7zhp5Z1bqqn/view?usp=sharing))
 <img width="300" alt="CleanShot 2021-12-09 at 10 59 30@2x" src="https://user-images.githubusercontent.com/76472179/145350022-b4624fe0-2612-4fdb-950c-da6898ca4166.png">
 
