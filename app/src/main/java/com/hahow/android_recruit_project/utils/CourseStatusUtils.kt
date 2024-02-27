@@ -4,8 +4,11 @@ import android.content.Context
 import android.view.View
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import com.hahow.android_recruit_project.apiservice.ApiResult
 import `in`.hahow.android_recruit_project.R
-
+/**
+ * 課程label狀態更新單例
+ */
 object CourseStatusUtils {
     enum class StatusType(
         val value: String,

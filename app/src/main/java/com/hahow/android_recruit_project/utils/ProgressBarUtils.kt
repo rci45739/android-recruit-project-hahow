@@ -5,7 +5,9 @@ import android.graphics.Color
 import android.widget.ProgressBar
 import androidx.core.content.ContextCompat
 import `in`.hahow.android_recruit_project.R
-
+/**
+ * 課程售出進度條狀態單例
+ */
 object ProgressBarUtils {
     enum class StatusType(
         val value: String,

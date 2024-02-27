@@ -5,6 +5,7 @@
 - Deployment Target 為 Android 12。
 - 可使用第三方 library。
 - 請寫文件或註解來解釋你的設計考量。
+- Test README
 
 ## 需求
 請實作一個在 app 首頁看到的課程列表，需求如下：

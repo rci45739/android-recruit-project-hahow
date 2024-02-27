@@ -56,7 +56,12 @@ class HahowCourseRepository(
     private fun loadCourseData(): String {
         return application.assets.open("data.json").bufferedReader().use { it.readText() }
     }
-
+    /**
+     * 解析課程data並返回相應的 [ApiResult]。
+     * @param jsonString 包含課程data的 JSON 字符串
+     * @param isSwipe 是否是滑動刷新操作
+     * @return [ApiResult] 對象，包含成功、失敗或完成的狀態
+     */
     private suspend fun parseCourseData(
         jsonString: String,
         isSwipe: Boolean

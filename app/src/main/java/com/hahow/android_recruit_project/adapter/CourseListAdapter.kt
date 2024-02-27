@@ -39,12 +39,6 @@ class CourseListAdapter(
         this.items = items as MutableList<CourseData>
     }
 
-/*    fun removeData(position: Int) {
-        val tempItemDataList = hahowCourseViewModel.itemDataList.value
-        tempItemDataList?.removeAt(position)
-        hahowCourseViewModel.itemDataList.postValue(tempItemDataList)
-    }*/
-
     override fun submitList(list: List<CourseData>?) {
         super.submitList(list?.let { ArrayList(it) })
     }

@@ -4,8 +4,11 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.hahow.android_recruit_project.apiservice.ApiResult
 import com.hahow.android_recruit_project.datamodel.CourseData
-
+/**
+ * 定義接口資料庫操作
+ */
 @Dao
 interface CourseDao {
     @Query("SELECT * FROM course")
