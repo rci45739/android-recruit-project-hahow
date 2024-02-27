@@ -2,7 +2,7 @@
 **(2/28留:想想還是有太多地方可以revampQQ,新開一個branch會持續發了pr可以無視，因為已超過截止日期所以特別開其他branch來做revamp)**
 **(2/28留:新增hilt將原本viewModel repository解耦合，新pr不會做Merge直到審核結束，單純自己修修改改玩玩)**
 
-![image]([picture or gif url](https://github.com/rci45739/image.git))
+![Media_240228_050103](https://github.com/rci45739/android-recruit-project-hahow/assets/102403900/1f3ec21f-2cc7-4f50-ae82-ff7641b1605e)
 ## BASE
 **BaseFragment** and **BaseActivity**。
 - 基礎的Fragment類與Activity類，用於绑定 ViewModel 和 ViewDataBinding，並提供了一些lifecycle方法和抽象方法供子類實現。
