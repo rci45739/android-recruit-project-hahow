@@ -1,4 +1,6 @@
 **毫無技巧，全是將需求與畫面完整呈現的感情**
+**(2/28留:想想還是有太多地方可以revampQQ,新開一個branch會持續發了pr可以無視，因為已超過截止日期所以特別開其他branch來做revamp)**
+**(2/28留:新增hilt將原本viewModel repository解耦合，新pr不會做Merge直到審核結束，單純自己修修改改玩玩)**
 ## BASE
 **BaseFragment** and **BaseActivity**。
 - 基礎的Fragment類與Activity類，用於绑定 ViewModel 和 ViewDataBinding，並提供了一些lifecycle方法和抽象方法供子類實現。
