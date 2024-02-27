@@ -51,6 +51,4 @@
 
 #### UI 設計
 <img width="300" alt="CleanShot 2021-12-09 at 10 59 30@2x" src="https://user-images.githubusercontent.com/76472179/145350022-b4624fe0-2612-4fdb-950c-da6898ca4166.png">
-[image]([picture or gif url](https://drive.google.com/file/d/1kJtRwsei6TmmqmrVT6PQL7zhp5Z1bqqn/view?usp=sharing))
-<img width="300" alt="CleanShot 2021-12-09 at 10 59 30@2x" src="https://user-images.githubusercontent.com/76472179/145350022-b4624fe0-2612-4fdb-950c-da6898ca4166.png">
 
