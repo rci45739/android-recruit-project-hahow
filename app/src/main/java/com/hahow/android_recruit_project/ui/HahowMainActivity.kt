@@ -7,6 +7,7 @@ import com.hahow.android_recruit_project.utils.FragmentUtil
 import com.hahow.android_recruit_project.viewmodel.HahowMainViewModel
 import `in`.hahow.android_recruit_project.R
 import `in`.hahow.android_recruit_project.databinding.ActivityHahowMainBinding
+import kotlin.system.exitProcess
 
 class HahowMainActivity: BaseActivity<ActivityHahowMainBinding, HahowMainViewModel>(
     HahowMainViewModel
@@ -55,6 +56,8 @@ class HahowMainActivity: BaseActivity<ActivityHahowMainBinding, HahowMainViewMod
 
     override fun onBackPressed() {
         super.onBackPressed()
-        finish()
+        moveTaskToBack(true)
+        android.os.Process.killProcess(android.os.Process.myPid())
+        exitProcess(1)
     }
 }

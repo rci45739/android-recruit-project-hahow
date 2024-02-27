@@ -175,7 +175,7 @@ abstract class BaseActivity<B : ViewDataBinding, VM : ViewModel>(protected var v
     /**
      * 按返回鍵兩次
      */
-    private var doubleBackToExitPressedOnce = false
+  /*  private var doubleBackToExitPressedOnce = false
     override fun onBackPressed() {
         if (doubleBackToExitPressedOnce) {
             super.onBackPressed()
@@ -189,5 +189,5 @@ abstract class BaseActivity<B : ViewDataBinding, VM : ViewModel>(protected var v
         Handler(Looper.getMainLooper()).postDelayed(Runnable {
             doubleBackToExitPressedOnce = false
         }, 2000)
-    }
+    }*/
 }
