@@ -7,22 +7,18 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.hahow.android_recruit_project.datamodel.CourseData
-import com.hahow.android_recruit_project.listener.ApiStatusListener
 import com.hahow.android_recruit_project.repository.HahowCourseRepository
 import com.hahow.android_recruit_project.room.CourseDao
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class HahowCourseViewModel(application: Application ) : AndroidViewModel
-    (application),
-    ApiStatusListener {
+    (application) {
     val clickListener = ObservableField<View.OnClickListener>()
     private val repository: HahowCourseRepository = HahowCourseRepository(application , viewModelScope)
     val courseList: MutableLiveData<List<CourseData>> = repository.courseList
-   /* var progressBarLoading: MutableLiveData<Boolean> = repository.isLoading
-    var swipeStatus: MutableLiveData<Boolean> = MutableLiveData()*/
-    var progressBarLoading: MutableLiveData<Boolean> = MutableLiveData()
-    var swipeStatus: MutableLiveData<Boolean> = MutableLiveData()
+    var progressBarLoading: MutableLiveData<Boolean> = repository.progressBarLoading
+    var swipeStatus: MutableLiveData<Boolean> = repository.swipeStatus
 
     fun fetchCourseData(courseDao: CourseDao , isSwipe:Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -32,22 +28,8 @@ class HahowCourseViewModel(application: Application ) : AndroidViewModel
                 if (isSwipe) {
                     courseDao.deleteAll()
                 }
-                repository.fetchCourseData(courseDao ,this@HahowCourseViewModel)
+                repository.fetchCourseData(courseDao , isSwipe)
             }
         }
-    }
-
-    override fun onSuccess() {
-       progressBarLoading.postValue(true)
-    }
-
-    override fun onFailure() {
-        progressBarLoading.postValue(false)
-        swipeStatus.postValue(false)
-    }
-
-    override fun onComplete() {
-        progressBarLoading.postValue(false)
-        swipeStatus.postValue(false)
     }
 }

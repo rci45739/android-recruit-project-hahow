@@ -6,27 +6,50 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.hahow.android_recruit_project.datamodel.CourseData
 import com.hahow.android_recruit_project.datamodel.CourseList
+import com.hahow.android_recruit_project.apiservice.ApiResult
 import com.hahow.android_recruit_project.room.CourseDao
-import com.hahow.android_recruit_project.listener.ApiStatusListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 
-class HahowCourseRepository(private val application: Application, private val coroutineScope
-:CoroutineScope) {
+class HahowCourseRepository(
+    private val application: Application, private val coroutineScope
+    : CoroutineScope
+) {
     val courseList: MutableLiveData<List<CourseData>> = MutableLiveData()
-    val isLoading: MutableLiveData<Boolean> = MutableLiveData(false)
-    private var cacheList:List<CourseData> = listOf()
+    private var cacheList: List<CourseData> = listOf()
     private val gson: Gson = Gson()
+    var progressBarLoading: MutableLiveData<Boolean> = MutableLiveData()
+    var swipeStatus: MutableLiveData<Boolean> = MutableLiveData()
 
-    suspend fun fetchCourseData(courseDao: CourseDao , apiStatusListener: ApiStatusListener) {
-            val jsonString = loadCourseData()
-            val courseDataList = parseCourseData(jsonString , apiStatusListener)
-            cacheList = emptyList()
-            courseList.postValue(courseDataList)
-            courseDao.insertAll(courseDataList)
-            cacheList = courseDao.getAllCourses()
+    suspend fun fetchCourseData(
+        courseDao: CourseDao, isSwipe: Boolean
+    ) {
+        val jsonString = loadCourseData()
+        val result = parseCourseData(jsonString, isSwipe)
+        when (result) {
+            is ApiResult.Success -> {
+                cacheList = emptyList()
+                courseList.postValue(result.data)
+                courseDao.insertAll(result.data)
+                cacheList = courseDao.getAllCourses()
+                if(isSwipe){
+                    swipeStatus.postValue(false)
+                }else{
+                    progressBarLoading.postValue(false)
+                }
+            }
+            is ApiResult.Error -> {
+                swipeStatus.postValue(false)
+                progressBarLoading.postValue(false)
+            }
+
+            else -> {
+                swipeStatus.postValue(false)
+                progressBarLoading.postValue(false)
+            }
+        }
 
     }
 
@@ -34,18 +57,25 @@ class HahowCourseRepository(private val application: Application, private val co
         return application.assets.open("data.json").bufferedReader().use { it.readText() }
     }
 
-    private suspend fun parseCourseData(jsonString: String, apiStatusListener: ApiStatusListener): List<CourseData> {
+    private suspend fun parseCourseData(
+        jsonString: String,
+        isSwipe: Boolean
+    ): ApiResult<List<CourseData>> {
         return withContext(Dispatchers.Default) {
             try {
-                apiStatusListener.onSuccess()
+                if(isSwipe){
+                    swipeStatus.postValue(true)
+                }else{
+                    progressBarLoading.postValue(true)
+                }
                 val courseType = object : TypeToken<CourseList>() {}.type
-                gson.fromJson<CourseList>(jsonString, courseType).data
+                val courseList = gson.fromJson<CourseList>(jsonString, courseType).data
+                ApiResult.Success(courseList)
             } catch (e: Exception) {
-                apiStatusListener.onFailure()
-                emptyList()
+                ApiResult.Error(e.message ?: "An error occurred")
             } finally {
                 delay(2000)
-                apiStatusListener.onComplete()
+                ApiResult.Complete
             }
         }
     }

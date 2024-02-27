@@ -3,5 +3,5 @@
     <string name="textview_countdown_time">倒數13天</string>
     <string name="published_text">已開課</string>
     <string name="incubating_text">募資中</string>
-    <string name="success_text">已完成</string>
+    <string name="success_text">募資成功</string>
 </resources>

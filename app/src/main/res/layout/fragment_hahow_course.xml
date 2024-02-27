@@ -21,6 +21,8 @@
             android:id="@+id/courseListRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
+        </com.hahow.android_recruit_project.customerview.SwipeRefreshLayout>
+
         <ProgressBar
             android:layout_width="48dp"
             android:layout_height="48dp"
@@ -30,6 +32,5 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
-        </com.hahow.android_recruit_project.customerview.SwipeRefreshLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
