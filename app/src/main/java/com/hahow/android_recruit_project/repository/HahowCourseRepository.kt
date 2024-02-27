@@ -8,16 +8,16 @@ import com.hahow.android_recruit_project.datamodel.CourseData
 import com.hahow.android_recruit_project.datamodel.CourseList
 import com.hahow.android_recruit_project.apiservice.ApiResult
 import com.hahow.android_recruit_project.room.CourseDao
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class HahowCourseRepository(
-    private val application: Application, private val coroutineScope
-    : CoroutineScope
+class HahowCourseRepository@Inject
+constructor(
+    private val application: Application
 ) {
-    val courseList: MutableLiveData<List<CourseData>> = MutableLiveData()
+    val courseList: MutableLiveData<List<CourseData>?> = MutableLiveData()
     private var cacheList: List<CourseData> = listOf()
     private val gson: Gson = Gson()
     var progressBarLoading: MutableLiveData<Boolean> = MutableLiveData()
@@ -27,8 +27,7 @@ class HahowCourseRepository(
         courseDao: CourseDao, isSwipe: Boolean
     ) {
         val jsonString = loadCourseData()
-        val result = parseCourseData(jsonString, isSwipe)
-        when (result) {
+        when (val result = parseCourseData(jsonString, isSwipe)) {
             is ApiResult.Success -> {
                 cacheList = emptyList()
                 courseList.postValue(result.data)

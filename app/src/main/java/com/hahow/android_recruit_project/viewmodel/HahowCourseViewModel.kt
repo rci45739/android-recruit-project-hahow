@@ -1,22 +1,24 @@
 package com.hahow.android_recruit_project.viewmodel
 
-import android.app.Application
 import android.view.View
 import androidx.databinding.ObservableField
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hahow.android_recruit_project.datamodel.CourseData
 import com.hahow.android_recruit_project.repository.HahowCourseRepository
 import com.hahow.android_recruit_project.room.CourseDao
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-
-class HahowCourseViewModel(application: Application ) : AndroidViewModel
-    (application) {
+import javax.inject.Inject
+@HiltViewModel
+class HahowCourseViewModel @Inject constructor( private val repository:
+HahowCourseRepository, private val savedStateHandle: SavedStateHandle
+) : ViewModel(){
     val clickListener = ObservableField<View.OnClickListener>()
-    private val repository: HahowCourseRepository = HahowCourseRepository(application , viewModelScope)
-    val courseList: MutableLiveData<List<CourseData>> = repository.courseList
+    val courseList: MutableLiveData<List<CourseData>?> = repository.courseList
     var progressBarLoading: MutableLiveData<Boolean> = repository.progressBarLoading
     var swipeStatus: MutableLiveData<Boolean> = repository.swipeStatus
 
@@ -28,7 +30,7 @@ class HahowCourseViewModel(application: Application ) : AndroidViewModel
                 if (isSwipe) {
                     courseDao.deleteAll()
                 }
-                repository.fetchCourseData(courseDao , isSwipe)
+                repository.fetchCourseData(courseDao , isSwipe )
             }
         }
     }

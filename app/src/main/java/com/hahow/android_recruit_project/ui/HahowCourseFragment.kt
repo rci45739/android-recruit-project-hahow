@@ -1,6 +1,5 @@
 package com.hahow.android_recruit_project.ui
 
-import android.app.Application
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hahow.android_recruit_project.BaseFragment
@@ -8,15 +7,19 @@ import com.hahow.android_recruit_project.adapter.CourseListAdapter
 import com.hahow.android_recruit_project.room.CourseDao
 import com.hahow.android_recruit_project.room.CourseDatabase
 import com.hahow.android_recruit_project.viewmodel.HahowCourseViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import `in`.hahow.android_recruit_project.R
 import `in`.hahow.android_recruit_project.databinding.FragmentHahowCourseBinding
+import androidx.fragment.app.viewModels
 
+@AndroidEntryPoint
 class HahowCourseFragment : BaseFragment<FragmentHahowCourseBinding, HahowCourseViewModel>(
-    HahowCourseViewModel(application = Application())
+    HahowCourseViewModel::class.java
 ) {
     private lateinit var courseListAdapter: CourseListAdapter
     private lateinit var courseAppDatabase: CourseDatabase
     private lateinit var courseDao: CourseDao
+    private val viewModel: HahowCourseViewModel by viewModels()
 
     override fun layoutId(): Int {
         return R.layout.fragment_hahow_course
@@ -46,7 +49,7 @@ class HahowCourseFragment : BaseFragment<FragmentHahowCourseBinding, HahowCourse
     override fun setObserver() {
         viewModel.run {
             viewModel.courseList.observe(this@HahowCourseFragment) {
-                courseListAdapter.setData(it.toMutableList())
+                courseListAdapter.setData(it?.toMutableList())
                 courseListAdapter.submitList(it)
                 courseListAdapter.notifyDataSetChanged()
             }
