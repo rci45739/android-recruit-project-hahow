@@ -9,14 +9,16 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import dagger.hilt.android.AndroidEntryPoint
 
 /**
  *
  * @author David
  * @create 2024/2/24
  */
-abstract class BaseFragment<B : ViewDataBinding, VM : ViewModel>(protected var viewModel: VM) :
-    Fragment() {
+abstract class BaseFragment<B : ViewDataBinding, VM : ViewModel>(
+    protected val viewModelClass: Class<VM>
+) : Fragment() {
 
     protected lateinit var dataBinding: B
     protected var bundle: Bundle? = null
@@ -26,8 +28,6 @@ abstract class BaseFragment<B : ViewDataBinding, VM : ViewModel>(protected var v
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        viewModel = ViewModelProvider(this).get(viewModel::class.java)
         dataBinding = DataBindingUtil.inflate(inflater, layoutId(), container, false)
         dataBinding.lifecycleOwner = this
         return dataBinding.root
@@ -35,7 +35,6 @@ abstract class BaseFragment<B : ViewDataBinding, VM : ViewModel>(protected var v
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         bundle = this.arguments
         if (bundle != null) {
             getBundleExtras(bundle)
@@ -48,41 +47,21 @@ abstract class BaseFragment<B : ViewDataBinding, VM : ViewModel>(protected var v
         setObserver()
     }
 
-    /**
-     * Get Layout ID
-     *
-     * @return layout xml id
-     */
+    protected inline fun <reified VM : ViewModel> createViewModel(): VM {
+        return ViewModelProvider(this).get(VM::class.java)
+    }
+
     protected abstract fun layoutId(): Int
 
-    /**
-     * Get intent bundle extras
-     */
     protected abstract fun getBundleExtras(bundle: Bundle?)
 
-    /**
-     * Bind Layouts With ViewModel
-     */
     protected abstract fun bindLayoutWithViewModel()
 
-    /**
-     * Set Appbar
-     */
     protected abstract fun setAppbar()
 
-    /**
-     * Set init data
-     */
     protected abstract fun initData()
 
-    /**
-     * Initial View
-     */
     protected abstract fun initView(savedInstanceState: Bundle?)
 
-    /**
-     * Add Observer or Listener
-     */
     protected abstract fun setObserver()
-
 }

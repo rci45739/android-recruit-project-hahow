@@ -5,11 +5,13 @@ import android.os.Bundle
 import com.hahow.android_recruit_project.BaseActivity
 import com.hahow.android_recruit_project.utils.FragmentUtil
 import com.hahow.android_recruit_project.viewmodel.HahowMainViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import `in`.hahow.android_recruit_project.R
 import `in`.hahow.android_recruit_project.databinding.ActivityHahowMainBinding
 import kotlin.system.exitProcess
 
-class HahowMainActivity: BaseActivity<ActivityHahowMainBinding, HahowMainViewModel>(
+@AndroidEntryPoint
+class HahowMainActivity : BaseActivity<ActivityHahowMainBinding, HahowMainViewModel>(
     HahowMainViewModel
         (
         application
@@ -29,7 +31,7 @@ class HahowMainActivity: BaseActivity<ActivityHahowMainBinding, HahowMainViewMod
     }
 
     override fun initView(savedInstanceState: Bundle?) {
-        if(savedInstanceState == null){
+        if (savedInstanceState == null) {
             hahowCourseFragment = HahowCourseFragment.newInstance()
             FragmentUtil.addFragment(this, R.id.container, hahowCourseFragment, "MePage", null)
         }
