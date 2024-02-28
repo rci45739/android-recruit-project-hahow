@@ -1,6 +1,7 @@
 **毫無技巧，全是將需求與畫面完整呈現的感情**
 **(2/28留:想想還是有太多地方可以revampQQ,新開一個branch會持續發了pr可以無視，因為已超過截止日期所以特別開其他branch來做revamp)**
 **(2/28留:新增hilt將原本viewModel repository解耦合，新pr不會做Merge直到審核結束，單純自己修修改改玩玩)**
+**(2/29留:抱歉之前太忙前幾天寫寫了一堆shit,改動一下不然身為工程師的我實在沒臉見人haha..從大shit變小shit,公平性還是可以忽略2/27後的更新)**
 
 ![Media_240228_050103](https://github.com/rci45739/android-recruit-project-hahow/assets/102403900/1f3ec21f-2cc7-4f50-ae82-ff7641b1605e)
 ## BASE
@@ -28,6 +29,7 @@
 - **Coroutines**: `協程用來做一些耗時操作`
 - **SwipeRefreshLayout**: `用來做下拉刷新的layout`
 - **DataBinding**: `綁定View與數據模型`
+- **hilt**: `導入DI`
 
 ## Library or Third party Library
 - **Glide**: `用於加載、緩存和顯示圖片`
